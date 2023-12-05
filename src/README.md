@@ -40,7 +40,8 @@ pnpm start:dev
 response
 ```json
 {
-  "ok": 1 
+  "ok": 1,
+  "name": "사용중인 LLM model"
 }
 ```
 

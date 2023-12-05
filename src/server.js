@@ -2,19 +2,18 @@ import express from 'express'
 import morgan from 'morgan'
 import { CONFIG } from './config/config.js'
 import { createSimpleCompletion } from './chat/create-simple-completion.js'
-import { getLLM } from './chat/get-model.js'
-import { LLM_MODEL } from './chat/constant.js'
 import { createJsonCompletion } from './chat/create-json-completion.js'
 import { asyncWrapper } from './utils/asyncWrapper.js'
+import { initModel } from './chat/init-model.js'
 
 const app = express()
 app.use(express.json())
 app.use(morgan('dev'))
 
-const model = getLLM(LLM_MODEL.MISTRAL_7B_INSTRUCT_4Q)
+const { model, name } = await initModel()
 
 app.get('/health-check', (req, res) => {
-  return res.json({ ok: 1 })
+  return res.json({ ok: 1, name })
 })
 
 app.post(
